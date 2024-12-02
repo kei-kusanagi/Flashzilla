@@ -7,35 +7,28 @@
 
 import SwiftUI
 
+
 struct ContentView: View {
     
+//    let timer = Timer.publish(every: 1, on: .main, in: .common).autoconnect()
+    let timer = Timer.publish(every: 1, tolerance: 0.5, on: .main, in: .common).autoconnect()
+
+    @State private var counter = 0
+
     var body: some View {
-        VStack {
-            Text("Hello")
-            Spacer().frame(height: 100)
-            Text("World")
-        }
-        .contentShape(.rect)
-        .onTapGesture {
-            print("VStack tapped!")
-        }
-//        ZStack {
-//            Rectangle()
-//                .fill(.blue)
-//                .frame(width: 300, height: 300)
-//                .onTapGesture {
-//                    print("Rectangle tapped!")
-//                }
-//            
-//            Circle()
-//                .fill(.red)
-//                .frame(width: 300, height: 300)
-//                .contentShape(.rect)
-//                .onTapGesture {
-//                    print("Circle tapped!")
-//                }
-//                .allowsHitTesting(false)
-//        }
+        Text("Hello, World!")
+            .onReceive(timer) { time in
+                if counter == 5{
+                    cancelTimer()
+                }else {
+                    print("The time is now \(time)")
+                }
+                counter += 1
+            }
+    }
+    
+    func cancelTimer(){
+        timer.upstream.connect().cancel()
     }
 }
 
