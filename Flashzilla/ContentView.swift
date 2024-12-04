@@ -7,35 +7,23 @@
 
 import SwiftUI
 
+func withOptionalAnimation<Result>(_ animation: Animation? = .default, _ body: () throws -> Result) rethrows -> Result {
+    if UIAccessibility.isReduceMotionEnabled {
+        return try body()
+    } else {
+        return try withAnimation(animation, body)
+    }
+}
+
 struct ContentView: View {
-    
+    @Environment(\.accessibilityReduceTransparency) var reduceTransparency
+
     var body: some View {
-        VStack {
-            Text("Hello")
-            Spacer().frame(height: 100)
-            Text("World")
-        }
-        .contentShape(.rect)
-        .onTapGesture {
-            print("VStack tapped!")
-        }
-//        ZStack {
-//            Rectangle()
-//                .fill(.blue)
-//                .frame(width: 300, height: 300)
-//                .onTapGesture {
-//                    print("Rectangle tapped!")
-//                }
-//            
-//            Circle()
-//                .fill(.red)
-//                .frame(width: 300, height: 300)
-//                .contentShape(.rect)
-//                .onTapGesture {
-//                    print("Circle tapped!")
-//                }
-//                .allowsHitTesting(false)
-//        }
+        Text("Hello, World!")
+            .padding()
+            .background(reduceTransparency ? .black : .black.opacity(0.5))
+            .foregroundStyle(.white)
+            .clipShape(.capsule)
     }
 }
 
