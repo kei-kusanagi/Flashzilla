@@ -25,7 +25,6 @@ struct CardView: View {
                         ? .white
                         : .white
                             .opacity(1 - Double(abs(offset.width / 50)))
-
                 )
                 .background(
                     accessibilityDifferentiateWithoutColor
@@ -34,6 +33,7 @@ struct CardView: View {
                             .fill(offset.width > 0 ? .green : .red)
                 )
                 .shadow(radius: 10)
+
 
             VStack {
                 Text(card.prompt)
